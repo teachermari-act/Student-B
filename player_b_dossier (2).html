@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Blackwood Manor - Player B: Surveyor Codex</title>
+  <style>
+    :root {
+      --bg: #050508;
+      --card-bg: #0a111a;
+      --border: #1a2f45;
+      --accent-cyan: #00e5ff;
+      --glow-blue: #1d72b8;
+      --text-main: #f0edf5;
+      --text-muted: #8ea5ba;
+      --font-display: 'Courier New', Courier, monospace;
+      --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 8px 30px 8px;
+      position: relative;
+      touch-action: manipulation;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dossier-header {
+      width: 100%;
+      background: #000;
+      border: 1px solid #1a2f45;
+      padding: 10px 14px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-display);
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .header-tag {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+    .player-badge {
+      background: #061c2b;
+      border: 1.5px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    .tabs-bar {
+      display: flex;
+      gap: 6px;
+      background: #080d14;
+      border: 1px solid #142538;
+      padding: 6px;
+      border-radius: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .tabs-bar::-webkit-scrollbar {
+      height: 4px;
+    }
+    .tabs-bar::-webkit-scrollbar-thumb {
+      background: #142b3d;
+      border-radius: 2px;
+    }
+
+    .tab-btn {
+      flex: 0 0 auto;
+      min-width: 90px;
+      background: #0c1522;
+      border: 1px solid #1a2f45;
+      color: var(--text-muted);
+      padding: 12px 10px;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      text-align: center;
+      transition: all 0.2s;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .tab-btn:hover, .tab-btn:active {
+      background: #142236;
+      color: #fff;
+      border-color: var(--accent-cyan);
+    }
+    .tab-btn.active {
+      background: #092c45;
+      border-color: var(--accent-cyan);
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      animation: fadeIn 0.25s ease;
+    }
+    .tab-pane.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .canvas-container {
+      width: 100%;
+      border: 1px solid #142538;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.9);
+      position: relative;
+      background: #000;
+      border-radius: 6px;
+      overflow: hidden;
+      touch-action: pan-x pan-y pinch-zoom;
+    }
+    .codex-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .zoom-hint {
+      font-size: 0.72rem;
+      color: #8ea5ba;
+      text-align: right;
+      padding: 0 4px;
+      font-family: var(--font-display);
+    }
+
+    .warning-box {
+      background: #071724;
+      border-left: 3.5px solid var(--accent-cyan);
+      border-top: 1px solid #142b3d;
+      border-right: 1px solid #142b3d;
+      border-bottom: 1px solid #142b3d;
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      color: #bfe5ff;
+      line-height: 1.5;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="dossier-header">
+      <div class="header-tag">OCCULT SURVEY CODEX // ARCHITECTURAL</div>
+      <div class="player-badge">PLAYER B</div>
+    </div>
+
+    <div class="tabs-bar">
+      <button class="tab-btn active" onclick="switchTab('tab-cover', this)">📖 COVER</button>
+      <button class="tab-btn" onclick="switchTab('tab-gate', this)">0. GATES</button>
+      <button class="tab-btn" onclick="switchTab('tab-study', this)">1. STUDY</button>
+      <button class="tab-btn" onclick="switchTab('tab-crypt', this)">2. CRYPT</button>
+      <button class="tab-btn" onclick="switchTab('tab-storage', this)">3. STORAGE</button>
+      <button class="tab-btn" onclick="switchTab('tab-vault', this)">4. VAULT</button>
+    </div>
+
+    <!-- TAB 0: COVER -->
+    <div class="tab-pane active" id="tab-cover">
+      <div class="canvas-container">
+        <img src="https://i.imgur.com/0szZfR6.jpeg" alt="Student B Codex Cover" class="codex-image" crossorigin="anonymous">
+      </div>
+      <div class="zoom-hint">🔍 Toque duplo ou pinça com 2 dedos para aproximar</div>
+      <div class="warning-box">
+        <strong>SURVEYOR BRIEFING:</strong> You have been granted access to the Occult Survey Codex. When instructed, tap the appropriate room tab above to inspect ancient diagrams.
+      </div>
+    </div>
+
+    <!-- TAB 1: 0. GATES -->
+    <div class="tab-pane" id="tab-gate">
+      <div class="canvas-container">
+        <img src="https://i.imgur.com/VvzxBF4.jpeg" alt="Occult Stone Crest Reliefs Document" class="codex-image" crossorigin="anonymous">
+      </div>
+      <div class="zoom-hint">🔍 Dica: Dê zoom nos 4 selos de pedra</div>
+      <div class="warning-box">
+        ⚠️ <strong>MANDATORY PROTOCOL:</strong> You hold the visual survey of the 4 perimeter reliefs. Player A has the diary rules and riddle. Talk, listen, and cooperate in English!
+      </div>
+    </div>
+
+    <!-- TAB 2: 1. STUDY -->
+    <div class="tab-pane" id="tab-study">
+      <div class="canvas-container">
+        <img src="https://i.imgur.com/eEpZYDC.jpeg" alt="Alchemical Reagent Survey Codex" class="codex-image" crossorigin="anonymous">
+      </div>
+      <div class="zoom-hint">🔍 Dica: Dê zoom nos frascos e cores</div>
+      <div class="warning-box">
+        ⚠️ <strong>MANDATORY PROTOCOL:</strong> You hold the chemical codex plates. Only Player A has Vance's exclusion log. Describe the flasks, colors, and 4-letter elemental labels in English!
+      </div>
+    </div>
+
+    <!-- TAB 3: 2. CRYPT -->
+    <div class="tab-pane" id="tab-crypt">
+      <div class="canvas-container">
+        <img src="https://i.imgur.com/l5chNEG.jpeg" alt="The Litany of the Crypt Codex" class="codex-image" crossorigin="anonymous">
+      </div>
+      <div class="zoom-hint">🔍 Dica: Dê zoom para ler os versos em latim e inglês</div>
+      <div class="warning-box">
+        ⚠️ <strong>INVERTED ROLE PROTOCOL:</strong> You hold the ancient Litany of the Crypt. Read the exclusion verses out loud in English and ask Player A to describe her drawings!
+      </div>
+    </div>
+
+    <!-- TAB 4: 3. STORAGE -->
+    <div class="tab-pane" id="tab-storage">
+      <div class="canvas-container">
+        <img src="https://i.imgur.com/rT5A6Ho.jpeg" alt="The Cold Storage Survey" class="codex-image" crossorigin="anonymous">
+      </div>
+      <div class="zoom-hint">🔍 Dica: Dê zoom nos compressores e engrenagens</div>
+      <div class="warning-box">
+        ⚠️ <strong>MANDATORY PROTOCOL:</strong> You hold the sub-zero compressor blueprints. Describe the dials and conditions in English so Player A can identify the single functional valve!
+      </div>
+    </div>
+
+    <!-- TAB 5: 4. VAULT -->
+    <div class="tab-pane" id="tab-vault">
+      <div class="canvas-container">
+        <img src="https://i.imgur.com/kwtzvnR.jpeg" alt="Sector 04 Extraction Blueprint" class="codex-image" crossorigin="anonymous">
+      </div>
+      <div class="zoom-hint">🔍 Dica: Dê zoom nos fios coloridos e terminais</div>
+      <div class="warning-box">
+        ⚠️ <strong>FINAL EXTRACTION BLUEPRINT:</strong> You hold the master wiring diagram connecting the 4 sector slots. Ask Player A for the four sector passwords in order and follow each wire path!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(paneId, btnElement) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btnElement.classList.add('active');
+      const targetPane = document.getElementById(paneId);
+      if (targetPane) targetPane.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
