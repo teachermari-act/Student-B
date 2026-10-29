@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teacher Confidential Dossier (Private Window)</title>
+<title>Teacher Archive // Confidential Terminal (Acts 1-4 Complete)</title>
 <style>
   :root {
     --bg: #0b0f14;
     --card: #151b23;
     --border: #30363d;
     --accent: #238636;
+    --blue: #58a6ff;
     --orange: #f0883e;
     --text: #c9d1d9;
     --muted: #8b949e;
@@ -21,19 +22,40 @@
     padding: 20px;
     line-height: 1.5;
   }
-  .container { max-width: 1200px; margin: 0 auto; }
+  .container { max-width: 1240px; margin: 0 auto; }
   header {
     border-bottom: 2px solid var(--border);
-    padding-bottom: 10px;
+    padding-bottom: 12px;
     margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  h1 { font-size: 20px; color: #58a6ff; }
+  h1 { font-size: 20px; color: var(--blue); }
   .badge { background: var(--accent); color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 4px; font-weight: bold; }
-  .note { background: #161f2c; border-left: 4px solid #58a6ff; padding: 10px 14px; font-size: 13px; color: #d1d5da; margin-bottom: 16px; }
-  .grid { display: grid; grid-template-columns: 500px 1fr; gap: 20px; }
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .tab-btn {
+    background: #161b22;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: #1f2937;
+    color: var(--blue);
+    border-color: var(--blue);
+  }
+  .note { background: #161f2c; border-left: 4px solid var(--blue); padding: 10px 14px; font-size: 13px; color: #d1d5da; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: 520px 1fr; gap: 20px; align-items: start; }
   @media(max-width: 900px) { .grid { grid-template-columns: 1fr; } }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
   .card h2 { font-size: 15px; color: #f0f6fc; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
@@ -42,55 +64,185 @@
   .fact-box h3 { font-size: 12px; color: var(--orange); margin-bottom: 8px; text-transform: uppercase; }
   .fact-box ul { padding-left: 18px; }
   .fact-box li { margin-bottom: 6px; }
-  .solution { background: #0f1f14; border: 1px solid #238636; padding: 12px; border-radius: 6px; font-size: 14px; }
-  .solution strong { color: #3fb950; }
+  .fact-box em { color: #58d68d; font-style: normal; font-weight: bold; }
+  .solution { background: #0f1f14; border: 1px solid #238636; padding: 14px; border-radius: 6px; font-size: 14px; }
+  .solution strong { color: #3fb950; font-size: 15px; }
+  .arrow { color: var(--blue); font-weight: bold; }
+  .final-code { color: #3fb950; font-weight: bold; background: #142e1b; padding: 2px 8px; border-radius: 4px; border: 1px solid #238636; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>Radio Operator Private Dossier — Teacher Only</h1>
-    <span class="badge">Keep Screen Hidden</span>
+    <h1>Teacher Confidential Archives — Camp Nightwing 1978</h1>
+    <span class="badge">Master Session Hub</span>
   </header>
 
-  <div class="note">
-    <strong>How to run the session:</strong> Share <code>main_screen.html</code> on Zoom/Meet for both of you to watch. Keep this window open separately on your computer to consult the police archive and guide the conversation naturally.
+  <div class="nav-tabs">
+    <button class="tab-btn active" id="btn-t1" onclick="switchTeacherTab(1)">📁 Act 1: Cabins</button>
+    <button class="tab-btn" id="btn-t2" onclick="switchTeacherTab(2)">📁 Act 2: Infirmary</button>
+    <button class="tab-btn" id="btn-t3" onclick="switchTeacherTab(3)">📁 Act 3: Generator</button>
+    <button class="tab-btn" id="btn-t4" onclick="switchTeacherTab(4)">📁 Act 4: North Gate Escape</button>
   </div>
 
-  <div class="grid">
-    <div class="card">
-      <h2>📁 Police Incident Report #78-0412</h2>
-      <div class="img-wrap">
-        <img src="https://i.imgur.com/YxKJhi3.jpeg" alt="Police Report">
+  <!-- TAB 1: ACT 1 CONTENT -->
+  <div id="tab-content-1">
+    <div class="note">
+      <strong>🎙️ Facilitation Note (Act 1):</strong> Share <code>main_screen.html</code> on Zoom. The student will guide the navigation using their map. Answer questions based on the police file below without giving the final cabin number away!
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>📄 Police Incident Report #1978</h2>
+        <div class="img-wrap">
+          <img src="https://i.imgur.com/YxKJhi3.jpeg" alt="Police Report Act 1">
+        </div>
+      </div>
+      <div class="card">
+        <h2>📋 Quick Fact Sheet (Act 1)</h2>
+        <div class="fact-box">
+          <h3>Witness Testimonies:</h3>
+          <ul>
+            <li><strong>Tommy Slater (Campfire):</strong> "The sheriff ran away from the woods toward the campfire with the metal radio box."</li>
+            <li><strong>Alice (Cabin 5):</strong> "Cabin 5 was in complete blackout. Nobody entered through the blue door!"</li>
+            <li><strong>Cindy (Nurse Station):</strong> "I saw flashlights near the cabins with green doors."</li>
+          </ul>
+        </div>
+        <div class="solution">
+          <strong>🎯 ACT 1 SOLUTION:</strong><br><br>
+          Path: <strong>Campfire Area</strong> (Cabins 5 & 6)<br>
+          Target Door: <strong>Cabin 6</strong> (Green door, as Cabin 5 is dark)<br>
+          Radio: Under the bunk bed inside Cabin 6.
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="card">
-      <h2>📋 Quick Information Lookup</h2>
-      
-      <div class="fact-box">
-        <h3>Witness Statements (from file):</h3>
-        <ul>
-          <li><strong>Tommy:</strong> Saw the sheriff running with a black box toward the <em>CAMPFIRE</em>, NOT into the woods.</li>
-          <li><strong>Cindy:</strong> Saw the sheriff enter a cabin with a <em>GREEN</em> or <em>RED</em> door.</li>
-          <li><strong>Alice:</strong> Confirms Cabin 5 lights are out; nobody entered that <em>BLUE</em> door cabin.</li>
-        </ul>
+  <!-- TAB 2: ACT 2 CONTENT -->
+  <div id="tab-content-2" style="display:none;">
+    <div class="note">
+      <strong>🎙️ Facilitation Note (Act 2):</strong> The student reads the Patient Report. They will tell you the treatment sequence (Pain Relief ➔ Disinfectant ➔ Stimulant). Give the codes and bottle descriptions from your table as they ask!
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>📁 Infirmary Toxicology Directory #1978</h2>
+        <div class="img-wrap">
+          <img src="https://i.imgur.com/2HgfeKe.png" alt="Toxicology Directory Act 2">
+        </div>
       </div>
-
-      <div class="fact-box">
-        <h3>Sheriff's Note (on Student's Dossier):</h3>
-        <ul>
-          <li>"The waters are not safe, so I stayed away from the lake!" (Eliminates Cabins 1 and 2).</li>
-        </ul>
+      <div class="card">
+        <h2>📋 Quick Fact Sheet (Act 2)</h2>
+        <div class="fact-box">
+          <h3>Chemical Bottles & Codes Reference:</h3>
+          <ul>
+            <li><strong>Amber Jar (Amber Glass):</strong> Pain Relief / Analgesic <span class="arrow">➔</span> Code: <em>PR</em></li>
+            <li><strong>Blue Flask (Dark Glass):</strong> Disinfectant / Antiseptic <span class="arrow">➔</span> Code: <em>DI</em></li>
+            <li><strong>Green Dropper (Green Bottle):</strong> Heart Stimulant / Adrenaline <span class="arrow">➔</span> Code: <em>HS</em></li>
+            <li><strong>Clear Vial ('X-CROSS'):</strong> Lethal Toxic Sedative <span class="arrow">➔</span> <em>DO NOT USE!</em></li>
+          </ul>
+        </div>
+        <div class="solution">
+          <strong>🎯 ACT 2 SOLUTION:</strong><br><br>
+          1. Pain Relief <span class="arrow">➔</span> <span class="final-code">PR</span><br>
+          2. Disinfectant <span class="arrow">➔</span> <span class="final-code">DI</span><br>
+          3. Heart Stimulant <span class="arrow">➔</span> <span class="final-code">HS</span><br><br>
+          Strongbox dial code on shared screen: <span class="final-code">PR - DI - HS</span>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <div class="solution">
-        <strong>🎯 Target Cabin: CABIN 6</strong><br>
-        • Not Lake (1, 2) ➔ Campfire Area (5, 6) ➔ Green Door (not Blue 5) ➔ <strong>Cabin 6</strong>.<br>
-        When you and the student agree, enter <code>6</code> on the shared screen to trigger the cutscene!
+  <!-- TAB 3: ACT 3 CONTENT -->
+  <div id="tab-content-3" style="display:none;">
+    <div class="note">
+      <strong>🎙️ Facilitation Note (Act 3 - Mode B):</strong> The student reads the Generator Startup Manual. 
+      <br>1. Turn on breakers <strong>B (Yellow)</strong>, <strong>C (Blue)</strong>, and <strong>D (Green)</strong>.
+      <br>2. When pulling the lever, the <strong>Mode B Wire Tracing pop-up</strong> appears! Ask the student to trace the cables or guide them using your wiring schematic below!
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>📁 Electrical Grid Blueprint #1978</h2>
+        <div class="img-wrap">
+          <img src="https://i.imgur.com/5P2yZCk.jpeg" alt="Grid Blueprint Act 3">
+        </div>
+      </div>
+      <div class="card">
+        <h2>📋 Quick Fact Sheet & Wire Tracing Guide</h2>
+        <div class="fact-box">
+          <h3>🔍 MODE B: CROSS-WIRING TRACE:</h3>
+          <ul>
+            <li><strong>Yellow Wire (from Switch B):</strong> Runs into <span class="final-code">Relay 3</span></li>
+            <li><strong>Blue Wire (from Switch C):</strong> Runs into <span class="final-code">Relay 1</span></li>
+            <li><strong>Green Wire (from Switch D):</strong> Crosses into <span class="final-code">Relay 2</span></li>
+          </ul>
+        </div>
+        <div class="solution">
+          <strong>🎯 ACT 3 SOLUTION:</strong><br><br>
+          Flip breakers <strong>B, C, D</strong> ➔ Pull Lever ➔ In pop-up: Set <span class="final-code">Yellow=3, Blue=1, Green=2</span> ➔ Click Engage Bypass!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: ACT 4 CONTENT (THE NORTH GATE & ESCAPE) -->
+  <div id="tab-content-4" style="display:none;">
+    <div class="note">
+      <strong>🎙️ Facilitation Note (Act 4 - Climax):</strong> The student reads the <strong>Evacuation Protocol</strong>. They will tell you the 4 required conditions (Priority 1 Red, Priority 2 Yellow, Route Highway 9, Gate Exit 2). Provide the matching digits from your table below to assemble the passcode!
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h2>📁 Sheriff Dispatch & Evacuation Matrix #1978</h2>
+        <div class="fact-box">
+          <h3>🚨 Sector Alert Codes:</h3>
+          <ul>
+            <li>Condition GREEN (Clear): Code <span class="final-code">1</span></li>
+            <li>Condition YELLOW (Caution): Code <span class="final-code">8</span></li>
+            <li>Condition RED (Full Lockout): Code <span class="final-code">5</span></li>
+          </ul>
+        </div>
+        <div class="fact-box">
+          <h3>🛣️ County Evacuation Routes:</h3>
+          <ul>
+            <li>Route Highway 7 (South Ridge): Code <span class="final-code">3</span></li>
+            <li>Route Highway 9 (North Main): Code <span class="final-code">4</span></li>
+            <li>Route County Line 12 (Blocked by fallen tree): Code <span class="final-code">9</span></li>
+          </ul>
+        </div>
+        <div class="fact-box">
+          <h3>🚪 Security Exit Portals:</h3>
+          <ul>
+            <li>Exit Portal 1 (Service Road): Code <span class="final-code">7</span></li>
+            <li>Exit Portal 2 (North Gate Heavy Winch): Code <span class="final-code">2</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <h2>📋 Quick Fact Sheet (Act 4)</h2>
+        <div class="fact-box">
+          <h3>Student's Protocol Formula:</h3>
+          <p>Digit 1: Primary Lockout Alert (RED) = <strong>5</strong></p>
+          <p>Digit 2: Secondary Perimeter Alert (YELLOW) = <strong>8</strong></p>
+          <p>Digit 3: Assigned Evacuation Highway (ROUTE 9) = <strong>4</strong></p>
+          <p>Digit 4: Active Gate Portal (NORTH GATE PORTAL 2) = <strong>2</strong></p>
+        </div>
+        <div class="solution">
+          <strong>🎯 ACT 4 FINAL ESCAPE CODE:</strong><br><br>
+          Passcode to enter on keypad: <span class="final-code" style="font-size:18px;">5 - 8 - 4 - 2</span><br><br>
+          1. On the shared screen, click the Keypad and type <strong>5842</strong> ➔ Click <strong>OK</strong>.<br>
+          2. Click the big red <strong>Emergency Override Button</strong> on the console.<br>
+          3. The heavy steel gates swing open, the van roars, and the team escapes into the night!
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function switchTeacherTab(tab) {
+    [1, 2, 3, 4].forEach(t => {
+      document.getElementById("btn-t" + t).className = (t === tab) ? "tab-btn active" : "tab-btn";
+      document.getElementById("tab-content-" + t).style.display = (t === tab) ? "block" : "none";
+    });
+  }
+</script>
 </body>
 </html>
